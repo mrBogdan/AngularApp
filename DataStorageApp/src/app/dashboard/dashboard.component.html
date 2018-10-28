@@ -1,0 +1,16 @@
+<h3>Files</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let file of files" routerLink="/detail/{{file.id}}" class="col-1-4">
+    <div class="module file">
+      <h4>
+          {{file.name}}
+      </h4>
+      <p>
+        Loaded: {{file.date}}
+      </p>
+      <p>
+        Size: {{file.size}} mb
+      </p>
+    </div>
+  </a>
+</div>

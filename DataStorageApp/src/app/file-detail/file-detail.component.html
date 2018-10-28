@@ -1,0 +1,23 @@
+<div *ngIf="file">
+
+  <h2> {{ file.name | uppercase }} Details</h2>
+
+  <div><span>name: </span> {{ file.name }}</div>
+
+    <p>
+        Loaded: {{file.date}}
+    </p>
+    <p>
+        Size: {{file.size}} mb
+    </p>
+
+  <div>
+    <label>
+        <span>name: </span> <input [(ngModel)]="file.name">
+    </label>
+  </div>
+
+    <button (click)="save()">save</button>
+    <button (click)="remove()">remove</button>
+    <button (click)="goBack()">go back</button>
+</div>
