@@ -27,8 +27,9 @@ export class FileDetailComponent implements OnInit {
 
   getFile(): void {
     const id = this.route.snapshot.paramMap.get('id');
+
     this.fileService.getFile(id)
-        .subscribe(file => this.file = file);
+        .subscribe(file => this.file = file[0]);
   }
 
   goBack(): void {
@@ -38,6 +39,13 @@ export class FileDetailComponent implements OnInit {
   save(): void {
     this.fileService.updateFile(this.file)
         .subscribe(() => this.goBack());
+  }
+
+  remove():void {
+      const id = this.route.snapshot.paramMap.get('id');
+
+      this.fileService.deleteFile(id)
+          .subscribe( () => this.goBack());
   }
 
 }

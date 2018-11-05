@@ -18,7 +18,20 @@ export class DashboardComponent implements OnInit {
 
   getFiles(): void {
     this.fileService.getFiles()
-        .subscribe((files) => this.files = files);
+        .subscribe((files) => {
+            let self = this;
+
+            files.forEach(function (item) {
+                self.files.push(
+                    <File>{
+                      id: item.id,
+                      name: item.name,
+                      size: item.size,
+                      upload: new Date(item.upload).toLocaleTimeString()
+                    }
+                );
+            });
+        });
   }
 
 }

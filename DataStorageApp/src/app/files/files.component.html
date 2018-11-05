@@ -1,0 +1,13 @@
+<div>
+    <h2>File Form</h2>
+<form enctype="multipart/form-data">
+    <input type="file" name="file" (change)="onFileSelected($event)">
+    <button type="button" (click)="onUpload()">Upload</button>
+</form>
+</div>
+
+<div>
+    <ul>
+        <li *ngFor="let key of fileKeys">{{ key }} = {{ fileExts[key] }}</li>
+    </ul>
+</div>

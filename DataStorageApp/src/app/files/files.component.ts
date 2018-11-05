@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 
 import { File } from '../file';
-import { FileService } from "../file.service";
+import {FileService} from "../file.service";
 
 @Component({
   selector: 'app-files',
@@ -10,17 +10,29 @@ import { FileService } from "../file.service";
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
+  selectedFile = null;
+  fileExts;
+  fileKeys = [];
 
-  files: File[];
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
 
-  getFiles(): void {
-    this.fileService.getFiles()
-        .subscribe(files => this.files = files);
+  onUpload() {
+    this.fileService.uploadFile(this.selectedFile);
+  }
+
+  getAllFileExt() {
+    this.fileService.getFileExts()
+        .subscribe(exts => {
+          this.fileExts = exts;
+          this.fileKeys = Object.keys(exts);
+        });
   }
 
   constructor(private fileService: FileService) { }
 
   ngOnInit() {
-    this.getFiles();
+    this.getAllFileExt();
   }
 }

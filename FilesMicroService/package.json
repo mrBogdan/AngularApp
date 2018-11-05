@@ -10,8 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cassandra-driver": "^3.5.0",
     "cors": "^2.8.4",
+    "dse-driver": "^1.2.0",
     "express": "^4.16.4",
-    "formidable": "^1.2.1"
+    "express-cassandra": "^2.2.3",
+    "formidable": "^1.2.1",
+    "multer": "^1.4.1",
+    "node-cassandra": "^0.4.2"
   }
 }

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, map, tap }    from "rxjs/operators";
 
 import { File } from './file';
+import {tick} from "@angular/core/testing";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,6 @@ export class FileService {
     return (error: any): Observable<T> => {
       console.log(error);
 
-      this.log(`${operation} failed: ${error.message}`);
-
       return of(result as T);
     };
 
@@ -34,46 +33,50 @@ export class FileService {
   getFiles(): Observable<File[]> {
     return this.http.get<File[]>(this.filesUrl)
       .pipe(
-        tap(files => this.log('fetched files')),
+        tap(files => console.log('fetched files')),
         catchError(this.handleError('getFiles', []))
       );
   }
 
-    /**
-     * get file
-     * @param id
-     */
   getFile(id): Observable<any> {
     return this.http.get<File>(`${this.filesUrl}${id}`)
       .pipe(
-        tap(file => this.log('fetched file')),
+        tap(file => console.log('fetched file')),
         catchError(this.handleError('getFile', {}))
       );
   }
 
-    /**
-     * @param file: File
-     * update file
-     */
   updateFile(file: File): Observable<any> {
     return this.http.put(`${this.filesUrl}${file.id}`, file)
         .pipe(
-          tap(_ => this.log(`updated file id=${file.id}`)),
+          tap(() => console.log(`updated file id=${file.id}`)),
           catchError(this.handleError<any>('updateHero'))
         );
   }
 
-    /**
-     *
-     * @param file
-     */
-  deleteFile(file: File | number): Observable<any> {
-    return
+  deleteFile(id): Observable<any> {
+    return this.http.delete(`${this.filesUrl}${id}`)
+        .pipe(
+            catchError(this.handleError<any>('updateHero'))
+        );
   }
 
+  uploadFile(file): void {
+    const fd = new FormData();
+    
+    fd.append("file", file);
 
+    this.http.post(this.filesUrl, fd)
+        .subscribe(res => {
+          console.log(res);
+        });
+  }
 
-  log(msg: string) {
-      this.http.post(this.logError, msg);
+  getFileExts() {
+    return this.http.get(`${this.filesUrl}exts`)
+        .pipe(
+            catchError(this.handleError<any>('fileExts'))
+        );
+
   }
 }
